@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Animated Flex Cards</title>
+    <style>
+        /* General Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            overflow: hidden; /* Hide scrollbars from particle canvas */
+        }
+
+        /* Particle.js canvas styling */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .wrapper {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* Changed to column for heading */
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            gap: 50px; /* Add space between heading and cards */
+        }
+
+        /* --- NEW: FANCY HEADING STYLES --- */
+        .fancy-heading {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff8a00, #e52e71, #8a2be2, #0072ff, #ff8a00);
+            background-size: 200% auto;
+            color: #fff;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-flow 10s linear infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+        /* --- END OF NEW STYLES --- */
+
+        .container {
+            height: 400px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Card Styling */
+        .card {
+            width: 80px;
+            border-radius: 2rem;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            overflow: hidden;
+            margin: 0 10px;
+            display: flex;
+            align-items: flex-end;
+            transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0px 15px 35px -10px rgba(0, 0, 0, 0.8);
+            transform: scale(1);
+        }
+
+        .card:hover {
+            transform: scale(1.03); /* Slight zoom on hover */
+        }
+
+        .card > .row {
+            color: white;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+        }
+
+        .card > .row > .icon {
+            background: rgba(34, 34, 51, 0.8);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        .card > .row > .description {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+            height: 80px;
+            width: 520px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.4s ease-out;
+            transition-delay: 0.2s; /* Delay appearance of text */
+            margin-left: 15px;
+        }
+
+        .description p {
+            color: #b0b0ba;
+            padding-top: 5px;
+        }
+
+        .description h4 {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+
+        /* Radio Button Logic */
+        input {
+            display: none;
+        }
+
+        input:checked + label {
+            width: 600px;
+            transform: scale(1.05); /* Slightly larger when selected */
+        }
+
+        input:checked + label .description {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Dynamically assigned background images will be handled by JavaScript */
+
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+    <div class="wrapper">
+         <h1 class="fancy-heading">Animated Flex Cards</h1>
+         
+        <div class="container">
+            <input type="radio" name="slide" id="c1" checked>
+            <label for="c1" class="card" id="card1">
+                <div class="row">
+                    <div class="icon">1</div>
+                    <div class="description">
+                        <h4>Exploration</h4>
+                        <p>Discover new horizons and push the boundaries of knowledge.</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c2">
+            <label for="c2" class="card" id="card2">
+                <div class="row">
+                    <div class="icon">2</div>
+                    <div class="description">
+                        <h4>Innovation</h4>
+                        <p>Creating the future with cutting-edge digital technology.</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c3">
+            <label for="c3" class="card" id="card3">
+                <div class="row">
+                    <div class="icon">3</div>
+                    <div class="description">
+                        <h4>Connection</h4>
+                        <p>Bringing people together from all corners of the globe.</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c4">
+            <label for="c4" class="card" id="card4">
+                <div class="row">
+                    <div class="icon">4</div>
+                    <div class="description">
+                        <h4>Discovery</h4>
+                        <p>Advancing space engineering to explore the cosmos.</p>
+                    </div>
+                </div>
+            </label>
+            <input type="radio" name="slide" id="c5">
+            <label for="c5" class="card" id="card5">
+                <div class="row">
+                    <div class="icon">5</div>
+                    <div class="description">
+                        <h4>Discovery</h4>
+                        <p>Advancing space engineering to explore the cosmos.</p>
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+        // --- IMPROVED RANDOM IMAGE GENERATION ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach((card, index) => {
+                // Using picsum.photos for very reliable random images.
+                // The `?random=${index + 1}` part ensures a different image is loaded for each card.
+                const imageUrl = `https://picsum.photos/800/600?random=${index + 1}`;
+                card.style.backgroundImage = `url('${imageUrl}')`;
+            });
+        });
+
+         document.addEventListener('DOMContentLoaded', function() {
+            // --- Content Pools ---
+            // Create arrays of possible titles and descriptions
+            const randomTitles = [
+                "Synergy", "Innovation", "Discovery", "Horizons",
+                "Ecosystems", "Momentum", "Futures", "Connectivity"
+            ];
+
+            const randomDescriptions = [
+                "Harnessing the power of collaborative platforms.",
+                "Pushing the boundaries of what's possible.",
+                "A new era of digital transformation begins.",
+                "Connecting the world through seamless integration.",
+                "Exploring uncharted territories of science.",
+                "Building a sustainable and efficient future.",
+                "The next leap in technological evolution.",
+                "Unlocking potential with data-driven insights."
+            ];
+
+            // --- Card Content Generation ---
+            const cards = document.querySelectorAll('.card');
+
+            // Shuffle the arrays to ensure unique content for each card (optional but recommended)
+            const shuffledTitles = [...randomTitles].sort(() => 0.5 - Math.random());
+            const shuffledDescriptions = [...randomDescriptions].sort(() => 0.5 - Math.random());
+
+            cards.forEach((card, index) => {
+                // --- 1. GENERATE RANDOM IMAGE ---
+                // Using picsum.photos for reliable random images.
+                const imageUrl = `https://picsum.photos/800/600?random=${index + 1}`;
+                card.style.backgroundImage = `url('${imageUrl}')`;
+
+                // --- 2. GENERATE RANDOM TEXT ---
+                // Find the h4 and p elements within this specific card
+                const titleElement = card.querySelector('.description h4');
+                const descriptionElement = card.querySelector('.description p');
+
+                if (titleElement && descriptionElement) {
+                    // Assign the shuffled content using the card's index
+                    // The modulo (%) operator ensures we don't run out of content
+                    titleElement.textContent = shuffledTitles[index % shuffledTitles.length];
+                    descriptionElement.textContent = shuffledDescriptions[index % shuffledDescriptions.length];
+                }
+            });
+        });
+
+        // --- Particle.js Configuration (remains the same) ---
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse" /* Creates the hover effect */
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
