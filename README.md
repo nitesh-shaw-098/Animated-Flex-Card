@@ -6,10 +6,9 @@ This project showcases a set of visually engaging, interactive flex cards. It fe
 
 ## 🚀 Live Demo
 
-This project is live and interactive on CodePen. Click the link below to see it in action! The cards expand on click, and the background particles react to your mouse movements.
+This project is live and interactive on GitHub. Click the link below to see it in action! The cards expand on click, and the background particles react to your mouse movements.
 
-**[Click Here for the Live Demo](https://codepen.io/your-username/pen/your-pen-id)**
-
+**[Click Here for the Live Demo](https://nitesh-shaw-098.github.io/Animated-Flex-Card/)**
 
 ---
 
