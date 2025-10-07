@@ -6,10 +6,9 @@ This project showcases a set of visually engaging, interactive flex cards. It fe
 
 ## 🚀 Live Demo
 
-Here is a live demonstration of the project in action. The cards expand on click, and the background particles react to your mouse movements.
+This project is live and interactive on CodePen. Click the link below to see it in action! The cards expand on click, and the background particles react to your mouse movements.
 
-*A live demo link will be available here once the project is hosted on a platform like Netlify, Vercel, or GitHub Pages.*
-
+**[Click Here for the Live Demo](https://codepen.io/your-username/pen/your-pen-id)**
 
 
 ---
